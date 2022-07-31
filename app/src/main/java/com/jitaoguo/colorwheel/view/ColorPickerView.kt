@@ -44,6 +44,15 @@ class ColorPickerView @JvmOverloads constructor(
         markerBitmap = BitmapFactory.decodeResource(resources, R.mipmap.combined_shape)
     }
 
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        val width = MeasureSpec.getSize(widthMeasureSpec)
+        val mode = MeasureSpec.getMode(widthMeasureSpec)
+        super.onMeasure(
+            MeasureSpec.makeMeasureSpec(width, mode),
+            MeasureSpec.makeMeasureSpec(width, mode)
+        )
+    }
+
     override fun onDraw(canvas: Canvas) {
         drawColorWheel(canvas)
         drawMarker(canvas)
@@ -136,15 +145,11 @@ class ColorPickerView @JvmOverloads constructor(
         return bitmap
     }
 
-    private val downPointF = PointF() //point down
-
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 colorTmp = currentColor
-                downPointF.x = event.x
-                downPointF.y = event.y
                 update(event)
                 return true
             }
