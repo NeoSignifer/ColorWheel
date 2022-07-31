@@ -28,7 +28,8 @@ class CircleView @JvmOverloads constructor(
         super.onDraw(canvas)
         canvas.drawColor(if (isSelected) selectedColor else notSelectedColor)
         paint.color = color
-        canvas.drawCircle(width / 2f, height / 2f, RADIUS, paint)
+        val radiusPx = DensityUtils.dp2px(context, RADIUS_DP)
+        canvas.drawCircle(width / 2f, height / 2f, radiusPx, paint)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -41,6 +42,6 @@ class CircleView @JvmOverloads constructor(
     }
 
     companion object {
-        private const val RADIUS = 10f
+        private const val RADIUS_DP = 10f
     }
 }

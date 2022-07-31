@@ -15,7 +15,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         colorPickerView = findViewById(R.id.color_picker_view)
         threeColorPickerView = findViewById(R.id.three_color_picker)
+    }
 
-//        colorPickerView?.setOnColorPickerChangerListener(ColorC)
+    override fun onResume() {
+        super.onResume()
+        colorPickerView?.setOnColorPickerChangerListener(object :
+            ColorPickerView.OnColorPickerChangerListener {
+            override fun onColorPickerChanger(currentColor: Int, red: Int, green: Int, blue: Int) {
+                threeColorPickerView?.setCurrentSelectedColor(currentColor)
+            }
+        })
+
+        threeColorPickerView?.setOnSelectedColorChangeListener(object :
+            ThreeColorPickerView.OnSelectedColorChangeListener {
+            override fun onSelectedColorChange(color: Int) {
+                colorPickerView?.color = color
+            }
+        })
     }
 }

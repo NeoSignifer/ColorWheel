@@ -147,20 +147,20 @@ class ColorPickerView @JvmOverloads constructor(
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        when (event.actionMasked) {
+        return when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 colorTmp = currentColor
                 update(event)
-                return true
+                true
             }
             MotionEvent.ACTION_MOVE -> {
                 update(event)
-                return true
+                if (colorTmp != currentColor) {
+                    onColorPickerChanged()
+                }
+                true
             }
-            MotionEvent.ACTION_UP -> if (colorTmp != currentColor) {
-                onColorPickerChanged()
-            }
-            else -> return true
+            else -> true
         }
         return super.onTouchEvent(event)
     }
